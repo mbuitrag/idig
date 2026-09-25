@@ -1,0 +1,871 @@
+openapi: 3.0.1
+info:
+  title: Computer Parts Store API
+  description: >
+    Demo REST API for an online computer parts store.
+
+
+    **by FXN**
+
+
+    **Key Features:**
+
+    - Always returns data (no 404 errors)
+
+    - Generates realistic random computer parts data on-the-fly
+
+    - No database - all data is generated in-memory
+
+    - Perfect for demos, testing, and development
+
+
+    **Categories:**
+
+    CPU, GPU, RAM, Motherboard, Storage, PSU, Case, Cooling
+
+
+    **Note:** This is a demo service. All data is randomly generated and not
+    persisted.
+  contact:
+    name: API Support
+    url: https://github.com/
+    email: support@computerparts.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://fxn-pc-fxnpc.apps.itz-3q5alk.infra01-lb.wdc07.techzone.ibm.com
+    description: Generated server url
+tags:
+  - name: Products
+    description: Computer parts product management API
+  - name: Orders
+    description: Order management API
+  - name: Customers
+    description: Customer management API
+  - name: Actuator
+    description: Monitor and interact
+    externalDocs:
+      description: Spring Boot Actuator Web API Documentation
+      url: https://docs.spring.io/spring-boot/docs/current/actuator-api/html/
+paths:
+  /api/v1/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get product by ID
+      description: Returns a single product by ID. Always returns random data for any ID.
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Product"
+    put:
+      tags:
+        - Products
+      summary: Update a product
+      description: Updates an existing product. Returns random product data.
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Product"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Product"
+    delete:
+      tags:
+        - Products
+      summary: Delete a product
+      description: Deletes a product. Always returns success.
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.ApiResponse"
+  /api/v1/orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get order by ID
+      description: Returns a single order by ID. Always returns random data for any ID.
+      operationId: getOrderById
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+          example: order-123
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Order"
+    put:
+      tags:
+        - Orders
+      summary: Update an order
+      description: Updates an existing order. Returns random order data.
+      operationId: updateOrder
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+          example: order-123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Order"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Order"
+    delete:
+      tags:
+        - Orders
+      summary: Delete an order
+      description: Deletes an order. Always returns success.
+      operationId: deleteOrder
+      parameters:
+        - name: id
+          in: path
+          description: Order ID
+          required: true
+          schema:
+            type: string
+          example: order-123
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.ApiResponse"
+  /api/v1/customers/{id}:
+    get:
+      tags:
+        - Customers
+      summary: Get customer by ID
+      description: Returns a single customer by ID. Always returns random data for any ID.
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+          example: customer-123
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+    put:
+      tags:
+        - Customers
+      summary: Update a customer
+      description: Updates an existing customer. Returns random customer data.
+      operationId: updateCustomer
+      parameters:
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+          example: customer-123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+    delete:
+      tags:
+        - Customers
+      summary: Delete a customer
+      description: Deletes a customer. Always returns success.
+      operationId: deleteCustomer
+      parameters:
+        - name: id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+          example: customer-123
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.ApiResponse"
+  /api/v1/products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      description: Returns a paginated list of computer parts products. Always returns
+        random data.
+      operationId: getAllProducts
+      parameters:
+        - name: page
+          in: query
+          description: Page number (0-based)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          example: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+          example: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.PagedProductResponse"
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      description: Creates a new product. Returns random product data with generated ID.
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Product"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Product"
+  /api/v1/orders:
+    get:
+      tags:
+        - Orders
+      summary: Get all orders
+      description: Returns a paginated list of orders. Always returns random data.
+      operationId: getAllOrders
+      parameters:
+        - name: page
+          in: query
+          description: Page number (0-based)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          example: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+          example: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.PagedOrderResponse"
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      description: Creates a new order. Returns random order data with generated ID.
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Order"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Order"
+  /api/v1/customers:
+    get:
+      tags:
+        - Customers
+      summary: Get all customers
+      description: Returns a paginated list of customers. Always returns random data.
+      operationId: getAllCustomers
+      parameters:
+        - name: page
+          in: query
+          description: Page number (0-based)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          example: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+          example: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.dto.PagedCustomerResponse"
+    post:
+      tags:
+        - Customers
+      summary: Create a new customer
+      description: Creates a new customer. Returns random customer data with generated ID.
+      operationId: createCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+  /actuator:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator root web endpoint
+      operationId: links
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  additionalProperties:
+                    $ref: "#/components/schemas/org.springframework.boot.actuate.endpoint.web.Link"
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  additionalProperties:
+                    $ref: "#/components/schemas/org.springframework.boot.actuate.endpoint.web.Link"
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  additionalProperties:
+                    $ref: "#/components/schemas/org.springframework.boot.actuate.endpoint.web.Link"
+  /actuator/metrics:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator web endpoint 'metrics'
+      operationId: metrics
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+            application/json:
+              schema:
+                type: object
+  /actuator/metrics/{requiredMetricName}:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator web endpoint 'metrics-requiredMetricName'
+      operationId: metrics-requiredMetricName
+      parameters:
+        - name: requiredMetricName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+            application/json:
+              schema:
+                type: object
+  /actuator/info:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator web endpoint 'info'
+      operationId: info
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+            application/json:
+              schema:
+                type: object
+  /actuator/health:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator web endpoint 'health'
+      operationId: health
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+            application/json:
+              schema:
+                type: object
+  /actuator/health/**:
+    get:
+      tags:
+        - Actuator
+      summary: Actuator web endpoint 'health-path'
+      operationId: health-path
+      responses:
+        "200":
+          description: OK
+          content:
+            application/vnd.spring-boot.actuator.v3+json:
+              schema:
+                type: object
+            application/vnd.spring-boot.actuator.v2+json:
+              schema:
+                type: object
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    com.store.computerparts.model.Product:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique product identifier
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          description: Product name
+          example: Intel Core i9-13900K
+        category:
+          type: string
+          description: Product category
+          example: CPU
+          enum:
+            - CPU
+            - GPU
+            - RAM
+            - Motherboard
+            - Storage
+            - PSU
+            - Case
+            - Cooling
+        brand:
+          type: string
+          description: Brand/Manufacturer
+          example: Intel
+        price:
+          type: number
+          description: Product price in USD
+          example: 589.99
+        stock:
+          type: integer
+          description: Available stock quantity
+          format: int32
+          example: 45
+        description:
+          type: string
+          description: Product description
+        specifications:
+          type: object
+          additionalProperties:
+            type: string
+            description: Technical specifications (key-value pairs)
+          description: Technical specifications (key-value pairs)
+        warranty:
+          type: integer
+          description: Warranty period in months
+          format: int32
+          example: 36
+        rating:
+          type: number
+          description: Customer rating (0-5)
+          format: double
+          example: 4.7
+        releaseDate:
+          type: string
+          description: Product release date
+          format: date
+          example: 2023-10-20
+        imageUrl:
+          type: string
+          description: Product image URL
+          example: https://example.com/images/product.jpg
+      description: Product data (fields are ignored, random data is generated)
+    com.store.computerparts.model.Order:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique order identifier
+          example: order-123
+        customerId:
+          type: string
+          description: Customer identifier
+          example: customer-456
+        orderDate:
+          type: string
+          description: Order creation date and time
+          format: date-time
+        status:
+          type: string
+          description: Order status
+          example: PROCESSING
+          enum:
+            - PENDING
+            - PROCESSING
+            - SHIPPED
+            - DELIVERED
+            - CANCELLED
+        items:
+          type: array
+          description: List of items in the order
+          items:
+            $ref: "#/components/schemas/com.store.computerparts.model.OrderItem"
+        subtotal:
+          type: number
+          description: Subtotal amount (sum of all items)
+          example: 1299.99
+        tax:
+          type: number
+          description: Tax amount
+          example: 104
+        shipping:
+          type: number
+          description: Shipping cost
+          example: 15
+        total:
+          type: number
+          description: Total amount (subtotal + tax + shipping)
+          example: 1418.99
+        shippingAddress:
+          type: string
+          description: Shipping address
+          example: 123 Main St, San Francisco, CA 94102
+      description: Order data (fields are ignored, random data is generated)
+    com.store.computerparts.model.OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: Product identifier
+          example: prod-123
+        productName:
+          type: string
+          description: Product name
+          example: Intel Core i9-13900K
+        quantity:
+          type: integer
+          description: Quantity ordered
+          format: int32
+          example: 2
+        unitPrice:
+          type: number
+          description: Unit price
+          example: 589.99
+        totalPrice:
+          type: number
+          description: Total price for this item (quantity * unitPrice)
+          example: 1179.98
+      description: Individual item in an order
+    com.store.computerparts.model.Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique customer identifier
+          example: customer-123
+        firstName:
+          type: string
+          description: First name
+          example: John
+        lastName:
+          type: string
+          description: Last name
+          example: Smith
+        email:
+          type: string
+          description: Email address
+          example: john.smith@example.com
+        phone:
+          type: string
+          description: Phone number
+          example: +1-555-0123
+        address:
+          type: string
+          description: Street address
+          example: 123 Main St
+        city:
+          type: string
+          description: City
+          example: San Francisco
+        state:
+          type: string
+          description: State/Province
+          example: CA
+        zipCode:
+          type: string
+          description: Zip/Postal code
+          example: "94102"
+        country:
+          type: string
+          description: Country
+          example: USA
+        registrationDate:
+          type: string
+          description: Account registration date
+          format: date-time
+      description: Customer data (fields are ignored, random data is generated)
+    com.store.computerparts.dto.PagedProductResponse:
+      type: object
+      properties:
+        products:
+          type: array
+          description: List of products in current page
+          items:
+            $ref: "#/components/schemas/com.store.computerparts.model.Product"
+        page:
+          type: integer
+          description: Current page number (0-based)
+          format: int32
+          example: 0
+        size:
+          type: integer
+          description: Number of items per page
+          format: int32
+          example: 20
+        totalElements:
+          type: integer
+          description: Total number of products
+          format: int64
+          example: 1000
+        totalPages:
+          type: integer
+          description: Total number of pages
+          format: int32
+          example: 50
+        first:
+          type: boolean
+          description: Is this the first page?
+          example: true
+        last:
+          type: boolean
+          description: Is this the last page?
+          example: false
+      description: Paginated response for products
+    com.store.computerparts.dto.PagedOrderResponse:
+      type: object
+      properties:
+        orders:
+          type: array
+          description: List of orders in current page
+          items:
+            $ref: "#/components/schemas/com.store.computerparts.model.Order"
+        page:
+          type: integer
+          description: Current page number (0-based)
+          format: int32
+          example: 0
+        size:
+          type: integer
+          description: Number of items per page
+          format: int32
+          example: 20
+        totalElements:
+          type: integer
+          description: Total number of orders
+          format: int64
+          example: 1000
+        totalPages:
+          type: integer
+          description: Total number of pages
+          format: int32
+          example: 50
+        first:
+          type: boolean
+          description: Is this the first page?
+          example: true
+        last:
+          type: boolean
+          description: Is this the last page?
+          example: false
+      description: Paginated response for orders
+    com.store.computerparts.dto.PagedCustomerResponse:
+      type: object
+      properties:
+        customers:
+          type: array
+          description: List of customers in current page
+          items:
+            $ref: "#/components/schemas/com.store.computerparts.model.Customer"
+        page:
+          type: integer
+          description: Current page number (0-based)
+          format: int32
+          example: 0
+        size:
+          type: integer
+          description: Number of items per page
+          format: int32
+          example: 20
+        totalElements:
+          type: integer
+          description: Total number of customers
+          format: int64
+          example: 1000
+        totalPages:
+          type: integer
+          description: Total number of pages
+          format: int32
+          example: 50
+        first:
+          type: boolean
+          description: Is this the first page?
+          example: true
+        last:
+          type: boolean
+          description: Is this the last page?
+          example: false
+      description: Paginated response for customers
+    org.springframework.boot.actuate.endpoint.web.Link:
+      type: object
+      properties:
+        href:
+          type: string
+        templated:
+          type: boolean
+    com.store.computerparts.dto.ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Operation success status
+          example: true
+        message:
+          type: string
+          description: Response message
+          example: Product deleted successfully
+        timestamp:
+          type: string
+          description: Response timestamp
+          format: date-time
+      description: Generic API response

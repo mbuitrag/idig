@@ -1,0 +1,20 @@
+kind: MCPServer
+apiVersion: api.ibm.com/v1
+metadata:
+  name: computer-parts-store-api-server-m9qbl
+  namespace: Test
+  version: "1.0"
+  tags: []
+  domain: mcp
+  labels:
+    origin: mcp-rest
+spec:
+  title: Computer Parts Store API MCP Server
+  protocolVersion: V2025_11_25
+  quota:
+    $ref: Test:test-quota-m9qbl:1.0
+  policy-sequence:
+    - $ref: Test:test-freeflowpolicysequence-m9qbl:1.0
+  capabilities:
+    tools:
+      - $ref: Test:computer-parts-store-api-tool-m9qbl:1.0

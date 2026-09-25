@@ -1,0 +1,585 @@
+kind: MCPTools
+apiVersion: api.ibm.com/v1
+metadata:
+  name: computer-parts-store-api-tool-m9qbl
+  namespace: Test
+  version: "1.0"
+  tags: []
+  description: >
+    Demo REST API for an online computer parts store.
+
+
+    **by FXN**
+
+
+    **Key Features:**
+
+    - Always returns data (no 404 errors)
+
+    - Generates realistic random computer parts data on-the-fly
+
+    - No database - all data is generated in-memory
+
+    - Perfect for demos, testing, and development
+
+
+    **Categories:**
+
+    CPU, GPU, RAM, Motherboard, Storage, PSU, Case, Cooling
+
+
+    **Note:** This is a demo service. All data is randomly generated and not
+    persisted.
+  domain: mcp
+  labels:
+    api-spec: ./computer-parts-store-api-spec.yml
+spec:
+  tools:
+    - name: getProductById
+      description: Returns a single product by ID. Always returns random data for any ID.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Product ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Get product by ID
+      x-api-binding:
+        operationPath: /api/v1/products/{id}
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: updateProduct
+      description: Updates an existing product. Returns random product data.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Product ID
+            x-parameter-location: path
+            type: string
+          body_id: &a1
+            type: string
+            description: Unique product identifier
+            example: 550e8400-e29b-41d4-a716-446655440000
+          name: &a2
+            type: string
+            description: Product name
+            example: Intel Core i9-13900K
+          category: &a3
+            type: string
+            description: Product category
+            example: CPU
+            enum:
+              - CPU
+              - GPU
+              - RAM
+              - Motherboard
+              - Storage
+              - PSU
+              - Case
+              - Cooling
+          brand: &a4
+            type: string
+            description: Brand/Manufacturer
+            example: Intel
+          price: &a5
+            type: number
+            description: Product price in USD
+            example: 589.99
+          stock: &a6
+            type: integer
+            description: Available stock quantity
+            format: int32
+            example: 45
+          description: &a7
+            type: string
+            description: Product description
+          specifications: &a8
+            type: object
+            additionalProperties:
+              type: string
+              description: Technical specifications (key-value pairs)
+            description: Technical specifications (key-value pairs)
+          warranty: &a9
+            type: integer
+            description: Warranty period in months
+            format: int32
+            example: 36
+          rating: &a10
+            type: number
+            description: Customer rating (0-5)
+            format: double
+            example: 4.7
+          releaseDate: &a11
+            type: string
+            description: Product release date
+            format: date
+            example: 2023-10-20
+          imageUrl: &a12
+            type: string
+            description: Product image URL
+            example: https://example.com/images/product.jpg
+        required:
+          - id
+      title: Update a product
+      x-api-binding:
+        operationPath: /api/v1/products/{id}
+        operationMethod: PUT
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: deleteProduct
+      description: Deletes a product. Always returns success.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Product ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Delete a product
+      x-api-binding:
+        operationPath: /api/v1/products/{id}
+        operationMethod: DELETE
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: getOrderById
+      description: Returns a single order by ID. Always returns random data for any ID.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Order ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Get order by ID
+      x-api-binding:
+        operationPath: /api/v1/orders/{id}
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: updateOrder
+      description: Updates an existing order. Returns random order data.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Order ID
+            x-parameter-location: path
+            type: string
+          body_id: &a13
+            type: string
+            description: Unique order identifier
+            example: order-123
+          customerId: &a14
+            type: string
+            description: Customer identifier
+            example: customer-456
+          orderDate: &a15
+            type: string
+            description: Order creation date and time
+            format: date-time
+          status: &a16
+            type: string
+            description: Order status
+            example: PROCESSING
+            enum:
+              - PENDING
+              - PROCESSING
+              - SHIPPED
+              - DELIVERED
+              - CANCELLED
+          items:
+            type: array
+            description: List of items in the order
+            items:
+              type: object
+              properties:
+                productId: &a17
+                  type: string
+                  description: Product identifier
+                  example: prod-123
+                productName: &a18
+                  type: string
+                  description: Product name
+                  example: Intel Core i9-13900K
+                quantity: &a19
+                  type: integer
+                  description: Quantity ordered
+                  format: int32
+                  example: 2
+                unitPrice: &a20
+                  type: number
+                  description: Unit price
+                  example: 589.99
+                totalPrice: &a21
+                  type: number
+                  description: Total price for this item (quantity * unitPrice)
+                  example: 1179.98
+              description: Individual item in an order
+          subtotal: &a22
+            type: number
+            description: Subtotal amount (sum of all items)
+            example: 1299.99
+          tax: &a23
+            type: number
+            description: Tax amount
+            example: 104
+          shipping: &a24
+            type: number
+            description: Shipping cost
+            example: 15
+          total: &a25
+            type: number
+            description: Total amount (subtotal + tax + shipping)
+            example: 1418.99
+          shippingAddress: &a26
+            type: string
+            description: Shipping address
+            example: 123 Main St, San Francisco, CA 94102
+        required:
+          - id
+      title: Update an order
+      x-api-binding:
+        operationPath: /api/v1/orders/{id}
+        operationMethod: PUT
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: deleteOrder
+      description: Deletes an order. Always returns success.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Order ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Delete an order
+      x-api-binding:
+        operationPath: /api/v1/orders/{id}
+        operationMethod: DELETE
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: getCustomerById
+      description: Returns a single customer by ID. Always returns random data for any ID.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Customer ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Get customer by ID
+      x-api-binding:
+        operationPath: /api/v1/customers/{id}
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: updateCustomer
+      description: Updates an existing customer. Returns random customer data.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Customer ID
+            x-parameter-location: path
+            type: string
+          body_id: &a27
+            type: string
+            description: Unique customer identifier
+            example: customer-123
+          firstName: &a28
+            type: string
+            description: First name
+            example: John
+          lastName: &a29
+            type: string
+            description: Last name
+            example: Smith
+          email: &a30
+            type: string
+            description: Email address
+            example: john.smith@example.com
+          phone: &a31
+            type: string
+            description: Phone number
+            example: +1-555-0123
+          address: &a32
+            type: string
+            description: Street address
+            example: 123 Main St
+          city: &a33
+            type: string
+            description: City
+            example: San Francisco
+          state: &a34
+            type: string
+            description: State/Province
+            example: CA
+          zipCode: &a35
+            type: string
+            description: Zip/Postal code
+            example: "94102"
+          country: &a36
+            type: string
+            description: Country
+            example: USA
+          registrationDate: &a37
+            type: string
+            description: Account registration date
+            format: date-time
+        required:
+          - id
+      title: Update a customer
+      x-api-binding:
+        operationPath: /api/v1/customers/{id}
+        operationMethod: PUT
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: deleteCustomer
+      description: Deletes a customer. Always returns success.
+      inputSchema:
+        type: object
+        properties:
+          id:
+            description: Customer ID
+            x-parameter-location: path
+            type: string
+        required:
+          - id
+      title: Delete a customer
+      x-api-binding:
+        operationPath: /api/v1/customers/{id}
+        operationMethod: DELETE
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: getAllProducts
+      description: Returns a paginated list of computer parts products. Always returns
+        random data.
+      inputSchema:
+        type: object
+        properties:
+          page:
+            description: Page number (0-based)
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 0
+          size:
+            description: Number of items per page
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 20
+      title: Get all products
+      x-api-binding:
+        operationPath: /api/v1/products
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: createProduct
+      description: Creates a new product. Returns random product data with generated ID.
+      inputSchema:
+        type: object
+        properties:
+          id: *a1
+          name: *a2
+          category: *a3
+          brand: *a4
+          price: *a5
+          stock: *a6
+          description: *a7
+          specifications: *a8
+          warranty: *a9
+          rating: *a10
+          releaseDate: *a11
+          imageUrl: *a12
+      title: Create a new product
+      x-api-binding:
+        operationPath: /api/v1/products
+        operationMethod: POST
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: getAllOrders
+      description: Returns a paginated list of orders. Always returns random data.
+      inputSchema:
+        type: object
+        properties:
+          page:
+            description: Page number (0-based)
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 0
+          size:
+            description: Number of items per page
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 20
+      title: Get all orders
+      x-api-binding:
+        operationPath: /api/v1/orders
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: createOrder
+      description: Creates a new order. Returns random order data with generated ID.
+      inputSchema:
+        type: object
+        properties:
+          id: *a13
+          customerId: *a14
+          orderDate: *a15
+          status: *a16
+          items:
+            type: array
+            description: List of items in the order
+            items:
+              type: object
+              properties:
+                productId: *a17
+                productName: *a18
+                quantity: *a19
+                unitPrice: *a20
+                totalPrice: *a21
+              description: Individual item in an order
+          subtotal: *a22
+          tax: *a23
+          shipping: *a24
+          total: *a25
+          shippingAddress: *a26
+      title: Create a new order
+      x-api-binding:
+        operationPath: /api/v1/orders
+        operationMethod: POST
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: getAllCustomers
+      description: Returns a paginated list of customers. Always returns random data.
+      inputSchema:
+        type: object
+        properties:
+          page:
+            description: Page number (0-based)
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 0
+          size:
+            description: Number of items per page
+            x-parameter-location: query
+            type: integer
+            format: int32
+            default: 20
+      title: Get all customers
+      x-api-binding:
+        operationPath: /api/v1/customers
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: createCustomer
+      description: Creates a new customer. Returns random customer data with generated ID.
+      inputSchema:
+        type: object
+        properties:
+          id: *a27
+          firstName: *a28
+          lastName: *a29
+          email: *a30
+          phone: *a31
+          address: *a32
+          city: *a33
+          state: *a34
+          zipCode: *a35
+          country: *a36
+          registrationDate: *a37
+      title: Create a new customer
+      x-api-binding:
+        operationPath: /api/v1/customers
+        operationMethod: POST
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: links
+      description: Actuator root web endpoint
+      inputSchema:
+        type: object
+        properties: {}
+      title: Actuator root web endpoint
+      x-api-binding:
+        operationPath: /actuator
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: metrics
+      description: Actuator web endpoint 'metrics'
+      inputSchema:
+        type: object
+        properties: {}
+      title: Actuator web endpoint 'metrics'
+      x-api-binding:
+        operationPath: /actuator/metrics
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: metrics-requiredMetricName
+      description: Actuator web endpoint 'metrics-requiredMetricName'
+      inputSchema:
+        type: object
+        properties:
+          requiredMetricName:
+            description: requiredMetricName parameter
+            x-parameter-location: path
+            type: string
+        required:
+          - requiredMetricName
+      title: Actuator web endpoint 'metrics-requiredMetricName'
+      x-api-binding:
+        operationPath: /actuator/metrics/{requiredMetricName}
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: info
+      description: Actuator web endpoint 'info'
+      inputSchema:
+        type: object
+        properties: {}
+      title: Actuator web endpoint 'info'
+      x-api-binding:
+        operationPath: /actuator/info
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: health
+      description: Actuator web endpoint 'health'
+      inputSchema:
+        type: object
+        properties: {}
+      title: Actuator web endpoint 'health'
+      x-api-binding:
+        operationPath: /actuator/health
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
+    - name: health-path
+      description: Actuator web endpoint 'health-path'
+      inputSchema:
+        type: object
+        properties: {}
+      title: Actuator web endpoint 'health-path'
+      x-api-binding:
+        operationPath: /actuator/health/**
+        operationMethod: GET
+        api:
+          $path: ./computer-parts-store-api-spec.yml
